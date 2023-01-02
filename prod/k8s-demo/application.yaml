@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/kuckchuck96/argocd-app-manifest.git
     targetRevision: HEAD
-    path: prod/k8s-demo
+    path: prod/k8s-demo/manifest
   destination:
     service: https://kubernetes.default.svc
     namespace: myapp
