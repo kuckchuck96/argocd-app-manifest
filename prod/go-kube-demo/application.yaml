@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: go-kube-demo
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: my-apps
+    
+  project: default
+  source:
+    repoURL: https://github.com/kuckchuck96/argocd-app-manifest.git
+    targetRevision: HEAD
+    path: prod/go-kube-demo/manifest
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

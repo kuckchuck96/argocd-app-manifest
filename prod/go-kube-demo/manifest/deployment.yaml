@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-kube-demo
+spec:
+  selector:
+    matchLabels:
+      app: go-kube-demo
+  template:
+    metadata:
+      labels:
+        app: go-kube-demo
+    spec:
+      containers:
+        - name: go-kube-demo
+          image: kuckchuck96/go-kube-demo:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
