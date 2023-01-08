@@ -4,6 +4,7 @@ kind: Deployment
 metadata:
   name: go-kube-demo
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: go-kube-demo
@@ -22,3 +23,24 @@ spec:
               cpu: "500m"
           ports:
             - containerPort: 8080
+          startupProbe:
+            httpGet:
+              path: /go-kube-demo/health/liveness
+              port: 8080
+            failureThreshold: 15
+            periodSeconds: 5
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /go-kube-demo/health/liveness
+              port: 8080
+            failureThreshold: 15
+            periodSeconds: 5
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /go-kube-demo/health/readiness
+              port: 8080
+            failureThreshold: 15
+            periodSeconds: 5
+            timeoutSeconds: 5
