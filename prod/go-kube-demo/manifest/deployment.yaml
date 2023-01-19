@@ -46,7 +46,7 @@ spec:
             timeoutSeconds: 5
           volumeMounts:
             - mountPath: /app/logs
-              name: go-kube-demo-logs
+              name: go-kube-demo-data
       volumes:
         - name: go-kube-demo-data
           persistentVolumeClaim:
