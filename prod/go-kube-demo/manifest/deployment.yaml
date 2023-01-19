@@ -44,6 +44,9 @@ spec:
             failureThreshold: 15
             periodSeconds: 5
             timeoutSeconds: 5
+          volumeMounts:
+            - mountPath: /app/logs
+              name: go-kube-demo-logs
       volumes:
         - name: go-kube-demo-data
           persistentVolumeClaim:
