@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: go-kube-demo-pvc
 spec:
-  storageClassName: manual
+  storageClassName: hostpath
   resources:
     requests:
       storage: 1Gi

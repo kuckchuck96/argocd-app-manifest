@@ -44,3 +44,7 @@ spec:
             failureThreshold: 15
             periodSeconds: 5
             timeoutSeconds: 5
+      volumes:
+        - name: go-kube-demo-data
+          persistentVolumeClaim:
+            claimName: go-kube-demo-pvc
