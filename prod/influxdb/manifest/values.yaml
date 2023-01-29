@@ -1,0 +1,40 @@
+influxdb:
+  replicas: 2
+  image:
+    repository: influxdb
+    tag: 2.3.0-alpine
+    port: 8086
+  init:
+    organization: influxdata
+    bucket: default
+    user: admin
+  pvc:
+    storage:
+      name: hostpath
+      size: 1Gi
+    accessModes:
+      - ReadWriteOnce
+  probe:
+    path: /health
+    scheme: HTTP
+    liveness:
+      periodSeconds: 10
+      timeoutSeconds: 1
+      failureThreshold: 3
+    readiness:
+      periodSeconds: 10
+      timeoutSeconds: 1
+      successThreshold: 1
+      failureThreshold: 3
+    startup:
+      initialDelaySeconds: 30
+      periodSeconds: 5
+      timeoutSeconds: 1
+      failureThreshold: 6
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi  

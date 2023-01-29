@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  replicas: {{ .Values.influxdb.replicas }}    
+  minReadySeconds: 20
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{.Chart.Name }}-pvc
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.influxdb.image.repository }}:{{ .Values.influxdb.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.influxdb.image.port | int }}
+          envFrom:
+            - secretRef:
+              name: {{ .Chart.Name }}-secret
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/influxdb2
+          resources:
+            limits:
+              cpu: {{ .Values.influxdb.resources.limits.cpu }}
+              memory: {{ .Values.influxdb.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.influxdb.resources.requests.cpu }}
+              memory: {{ .Values.influxdb.resources.requests.memory }}          
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.influxdb.probe.path | quote }}
+              port: http
+              scheme: {{ .Values.influxdb.probe.scheme | quote }}
+            periodSeconds: {{ .Values.influxdb.probe.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.influxdb.probe.liveness.timeoutSeconds }}
+            failureThreshold: {{ .Values.influxdb.probe.liveness.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.influxdb.probe.path | quote }}
+              port: http
+              scheme: {{ .Values.influxdb.probe.scheme | quote }}
+            periodSeconds: {{ .Values.influxdb.probe.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.influxdb.probe.readiness.timeoutSeconds }}
+            successThreshold: {{ .Values.influxdb.probe.readiness.successThreshold }}
+            failureThreshold: {{ .Values.influxdb.probe.readiness.failureThreshold }}
+          startupProbe:
+            httpGet:
+              path: {{ .Values.influxdb.probe.path | quote }}
+              port: http
+              scheme: {{ .Values.influxdb.probe.scheme | quote }}
+            initialDelaySeconds: {{ .Values.influxdb.probe.startup.initialDelaySeconds }}
+            periodSeconds: {{ .Values.influxdb.probe.startup.periodSeconds }}
+            timeoutSeconds: {{ .Values.influxdb.probe.startup.timeoutSeconds }}
+            failureThreshold: {{ .Values.influxdb.probe.startup.failureThreshold }}
