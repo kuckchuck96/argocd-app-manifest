@@ -39,7 +39,7 @@ spec:
           livenessProbe:
             httpGet:
               path: {{ .Values.influxdb.probe.path | quote }}
-              port: http
+              port: {{ .Values.influxdb.image.port | int }}
               scheme: {{ .Values.influxdb.probe.scheme | quote }}
             periodSeconds: {{ .Values.influxdb.probe.liveness.periodSeconds }}
             timeoutSeconds: {{ .Values.influxdb.probe.liveness.timeoutSeconds }}
@@ -47,7 +47,7 @@ spec:
           readinessProbe:
             httpGet:
               path: {{ .Values.influxdb.probe.path | quote }}
-              port: http
+              port: {{ .Values.influxdb.image.port | int }}
               scheme: {{ .Values.influxdb.probe.scheme | quote }}
             periodSeconds: {{ .Values.influxdb.probe.readiness.periodSeconds }}
             timeoutSeconds: {{ .Values.influxdb.probe.readiness.timeoutSeconds }}
@@ -56,7 +56,7 @@ spec:
           startupProbe:
             httpGet:
               path: {{ .Values.influxdb.probe.path | quote }}
-              port: http
+              port: {{ .Values.influxdb.image.port | int }}
               scheme: {{ .Values.influxdb.probe.scheme | quote }}
             initialDelaySeconds: {{ .Values.influxdb.probe.startup.initialDelaySeconds }}
             periodSeconds: {{ .Values.influxdb.probe.startup.periodSeconds }}
