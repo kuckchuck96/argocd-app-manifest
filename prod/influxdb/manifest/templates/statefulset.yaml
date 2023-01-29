@@ -14,10 +14,6 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       terminationGracePeriodSeconds: 10
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: {{.Chart.Name }}-pvc
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.influxdb.image.repository }}:{{ .Values.influxdb.image.tag }}"
@@ -62,3 +58,17 @@ spec:
             periodSeconds: {{ .Values.influxdb.probe.startup.periodSeconds }}
             timeoutSeconds: {{ .Values.influxdb.probe.startup.timeoutSeconds }}
             failureThreshold: {{ .Values.influxdb.probe.startup.failureThreshold }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        storageClassName: {{ .Values.influxdb.pvc.storage.name }}
+        resources:
+          requests:
+            storage: {{ .Values.influxdb.pvc.storage.size }}
+        volumeMode: Filesystem
+        accessModes:
+        {{- range .Values.influxdb.pvc.accessModes }}
+          - {{ . }}
+        {{- end }}
+
