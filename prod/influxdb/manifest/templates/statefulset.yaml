@@ -25,7 +25,7 @@ spec:
             - containerPort: {{ .Values.influxdb.image.port | int }}
           envFrom:
             - secretRef:
-              name: {{ .Chart.Name }}-secret
+                name: {{ .Chart.Name }}-secret
           volumeMounts:
             - name: data
               mountPath: /var/lib/influxdb2
