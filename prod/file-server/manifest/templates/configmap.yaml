@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Chart.Name }}-cm
+data:
+  location.conf: |-
+    location ~ ^{{ .Values.server.volumes.mountPath }}/(?<file>.*) {}

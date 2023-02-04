@@ -21,6 +21,9 @@ spec:
         - name: storage
           persistentVolumeClaim:
             claimName: {{ .Chart.Name }}-pvc
+        - name: config
+          configMap:
+            name: {{ .Chart.Name }}-cm
       containers:
         - name: nginx
           image: "{{ .Values.server.image.name }}:{{ .Values.server.image.tag }}"
@@ -31,6 +34,9 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: {{ .Values.server.volumes.mountPath }}
+            - name: config
+              mountPath: /etc/nginx/conf.d
+              subPath: location.conf
           resources:
             limits:
               cpu: {{ .Values.server.resources.limits.cpu }}

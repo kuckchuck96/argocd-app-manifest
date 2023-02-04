@@ -13,7 +13,7 @@ server:
     accessModes:
       - ReadWriteMany
   volumes:
-    mountPath: /usr/share/nginx/upload
+    mountPath: /uploads
   resources:
     limits:
       cpu: 500m
