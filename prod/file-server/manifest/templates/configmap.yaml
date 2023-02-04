@@ -4,4 +4,4 @@ metadata:
   name: {{ .Chart.Name }}-cm
 data:
   location.conf: |-
-    location ~ ^{{ .Values.server.volumes.mountPath }}/(?<file>.*) {}
+    location {{ .Values.server.volumes.mountPath }} { }
