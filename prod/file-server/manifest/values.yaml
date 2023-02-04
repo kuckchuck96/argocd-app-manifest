@@ -3,7 +3,7 @@ server:
   replicas: 2
   image:
     name: nginx
-    tag: alpine
+    tag: latest
   port: 80
   terminationGracePeriodSeconds: 10
   pvc:
@@ -13,4 +13,4 @@ server:
     accessModes:
       - ReadWriteMany
   volumes:
-    mountPath: /usr/share/nginx/downloads
+    mountPath: /usr/share/nginx/upload
