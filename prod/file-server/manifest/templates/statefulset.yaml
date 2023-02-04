@@ -34,8 +34,9 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: {{ .Values.server.volumes.mountPath }}
-            # - name: config
-            #   mountPath: etc/nginx/conf.d/location.conf
+            - name: config
+              mountPath: /etc/nginx/conf.d/location.conf
+              subPath: location.conf
           resources:
             limits:
               cpu: {{ .Values.server.resources.limits.cpu }}
