@@ -4,7 +4,7 @@ server:
   image:
     name: nginx
     tag: alpine
-  port: 80
+  port: 8080
   terminationGracePeriodSeconds: 10
   pvc:
     storage:
@@ -12,3 +12,5 @@ server:
       size: 500Mi
     accessModes:
       - ReadWriteMany
+  volumes:
+    mountPath: /usr/share/nginx/downloads

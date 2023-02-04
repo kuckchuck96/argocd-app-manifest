@@ -24,9 +24,10 @@ spec:
       containers:
         - name: nginx
           image: "{{ .Values.server.image.name }}:{{ .Values.server.image.tag }}"
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: {{ .Values.server.port | int }}
               name: web
           volumeMounts:
             - name: storage
-              mountPath: /usr/share/nginx
+              mountPath: {{ .Values.server.volumes.mountPath }}
