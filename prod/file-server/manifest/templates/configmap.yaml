@@ -3,5 +3,7 @@ apiVersion: v1
 metadata:
   name: {{ .Chart.Name }}-cm
 data:
-  upload.conf: |-
-    location {{ .Values.server.volumes.mountPath }} { }
+  location.conf: |-
+    server {
+        location {{ .Values.server.volumes.mountPath }} { }
+    }
