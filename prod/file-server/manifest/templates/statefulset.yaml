@@ -31,3 +31,10 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: {{ .Values.server.volumes.mountPath }}
+          resources:
+            limits:
+              cpu: {{ .Values.server.resources.limits.cpu }}
+              memory: {{ .Values.server.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.server.resources.requests.cpu }}
+              memory: {{ .Values.server.resources.requests.memory }} 

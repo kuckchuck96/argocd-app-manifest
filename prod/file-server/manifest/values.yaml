@@ -14,3 +14,10 @@ server:
       - ReadWriteMany
   volumes:
     mountPath: /usr/share/nginx/upload
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1000Mi
+    requests:
+      cpu: 250m
+      memory: 500Mi
