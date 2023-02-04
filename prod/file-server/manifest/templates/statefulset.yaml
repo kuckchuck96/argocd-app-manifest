@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  serviceName: {{ .Chart.Name }}-service
+  replicas: {{ .Values.server.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.server.terminationGracePeriodSeconds }}
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Chart.Name }}-pvc
+      containers:
+        - name: nginx
+          image: "{{ .Values.server.image.name }}:{{ .Values.server.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.server.port | int }}
+              name: web
+          volumeMounts:
+            - name: storage
+              mountPath: /usr/share/nginx

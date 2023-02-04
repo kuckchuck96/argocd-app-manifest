@@ -1,0 +1,14 @@
+---
+server:
+  replicas: 2
+  image:
+    name: nginx
+    tag: alpine
+  port: 80
+  terminationGracePeriodSeconds: 10
+  pvc:
+    storage:
+      class: hostpath
+      size: 500Mi
+    accessModes:
+      - ReadWriteMany

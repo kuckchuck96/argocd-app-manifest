@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Chart.Name }}-pvc
+spec:
+  storageClassName: {{ .Values.server.pvc.storage.class }}
+  resources:
+    requests:
+      storage: {{ .Values.server.pvc.storage.size }}
+  volumeMode: Filesystem
+  accessModes:
+  {{- range .Values.server.pvc.accessModes }}
+    - {{ . }}
+  {{- end }}
