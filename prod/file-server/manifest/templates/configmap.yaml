@@ -6,6 +6,7 @@ data:
   location.conf: |-
     server {
         location {{ .Values.server.volumes.mountPath }}/ {
+            root {{ .Values.server.volumes.mountPath }}
             limit_except POST              { deny all; }
             client_body_in_file_only       on;
 
