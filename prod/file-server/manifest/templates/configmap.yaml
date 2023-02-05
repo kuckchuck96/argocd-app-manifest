@@ -9,6 +9,6 @@ data:
             limit_except POST              { deny all; }
             client_body_in_file_only       on;
 
-            return 201 $request_body_file;
+            return 200 $request_body_file;
         }
     }
