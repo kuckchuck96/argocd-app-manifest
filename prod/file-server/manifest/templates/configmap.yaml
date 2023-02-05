@@ -5,7 +5,7 @@ metadata:
 data:
   location.conf: |-
     server {
-      listen       8080;
+      listen       80;
       root {{ .Values.server.volumes.mountPath }};
 
       location / {
