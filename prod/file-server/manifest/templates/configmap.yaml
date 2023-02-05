@@ -5,11 +5,13 @@ metadata:
 data:
   location.conf: |-
     server {
-        location / {
-            root {{ .Values.server.volumes.mountPath }};
-            limit_except POST              { deny all; }
-            client_body_in_file_only       on;
+      listen       8080;
+      root {{ .Values.server.volumes.mountPath }};
 
-            return 200 $request_body_file;
-        }
+      location / {
+        limit_except POST              { deny all; }
+        client_body_in_file_only       on;
+
+        return 200 $request_body_file;
+      }
     }
